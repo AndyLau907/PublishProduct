@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Static {
     public static String[] type = {"DOC", "PDF", "XLS", "PPT", "DV", "PV", "OV", "Email", "OCR", "Cloud", "Barcode","SprSheet"};
-    public static String[] names={"Amy","Andy","Annika","Abel","Nina","Lisa","Kylie","William"};
+    public static String[] names={"Amy","Andy","Annika","Abel","Nina","Lisa","Kylie","William","Simple"};
     public static HashMap<String, String> map;
 
     static {

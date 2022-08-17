@@ -189,7 +189,7 @@ public class MainFrame extends JFrame implements ActionListener, SubmitListener 
         }
 
         sb.append("[" + releasePerson.getSelectedItem().toString() + "]release:\n");
-        sb.append("[Nina&Kylie&Abel&Andy&Annika&Amy&Lisa&William] informs:\n");
+        sb.append("[Nina&Kylie&Abel&Andy&Annika&Amy&Lisa&William&Simple] informs:\n");
         HashMap<String, ArrayList<Issue>> map = new HashMap<>();
         for (Issue issue : issueArrayList) {
             if (!issue.isInform()) {
