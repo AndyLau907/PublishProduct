@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 public class DetailFrame extends JFrame{
     private boolean isEdit;
     private Issue currentIssue;
+    private static String lastBugType="";
+
     private JComboBox<String> bugType, informPerson,orginPerson;
     private JCheckBox isOffice, isNewFeature, isInform;
     private JTextField issueID,informTo;
@@ -43,7 +45,14 @@ public class DetailFrame extends JFrame{
         for(String type:Static.type){
             bugType.addItem(type);
         }
-        bugType.setSelectedIndex(0);
+        //如果上一次创建的bug类型为空 那么默认类型为DOC
+        if(StringUtils.isEmpty(lastBugType)){
+            bugType.setSelectedIndex(0);
+        }else{
+            //否则默认为上一次的类型避免发布同一产品时重复选择
+            bugType.setSelectedItem(lastBugType);
+        }
+
         bugType.setBounds(70, y, 100, 25);
 
         JLabel label2 = new JLabel("通知人:");
@@ -201,6 +210,7 @@ public class DetailFrame extends JFrame{
                 currentIssue=new Issue(issueIDStr, bugTypeStr, informPersonStr, codeStr, enTextStr, chTextStr,isOfficeVal,  isInformVal,isNewFeatureVal,informToStr,orginPersonStr);
                 JOptionPane.showMessageDialog(DetailFrame.this,"添加成功.","提示",JOptionPane.INFORMATION_MESSAGE);
             }
+            lastBugType=currentIssue.getIssueType();
             listener.onSubmit(currentIssue,isEdit);
             DetailFrame.this.dispose();
         });
