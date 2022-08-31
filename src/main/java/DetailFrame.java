@@ -1,3 +1,6 @@
+import org.apache.commons.lang.StringUtils;
+import utils.Translator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +15,8 @@ public class DetailFrame extends JFrame{
     private JCheckBox isOffice, isNewFeature, isInform;
     private JTextField issueID,informTo;
     private JTextArea chText, enText, code;
-    private JButton sumbit;
+    private JButton sumbit,translatorBtn;
+
     private SubmitListener listener;
 
     public DetailFrame(Issue issue){
@@ -26,6 +30,7 @@ public class DetailFrame extends JFrame{
         init();
     }
     private void init() {
+
         int width = 400;
         int height = 840;
         int y;
@@ -112,6 +117,28 @@ public class DetailFrame extends JFrame{
         y+=100;
         JLabel label8 = new JLabel("英文描述:");
         label8.setBounds(10, y, 60, 30);
+        translatorBtn=new JButton("点我-Google机翻");
+        translatorBtn.setBounds(80,y,150,30);
+        translatorBtn.setBorderPainted(false);
+        translatorBtn.setFocusPainted(false);
+        translatorBtn.setContentAreaFilled(false);
+        translatorBtn.setForeground(Color.red);
+        translatorBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cnStr=chText.getText();
+                if(StringUtils.isBlank(cnStr)){
+                    JOptionPane.showMessageDialog(DetailFrame.this,"请先填写中文描述.","提示",JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                try {
+                    String enStr=Translator.translate("zh-CN","en",cnStr);
+                    enText.setText(enStr);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         y+=30;
         enText = new JTextArea();
         enText.setLineWrap(true);
@@ -190,6 +217,7 @@ public class DetailFrame extends JFrame{
             informTo.setText(currentIssue.getInformTo());
             orginPerson.setSelectedItem(currentIssue.getOrginPerson());
         }
+        this.add(translatorBtn);
         this.add(orginPerson);
         this.add(informTo);
         this.add(sumbit);
